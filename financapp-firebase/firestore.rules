@@ -1,0 +1,13 @@
+# Regras de Segurança Firestore
+# Cole estas regras no Console Firebase → Firestore → Regras
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Cada usuário só acessa sua própria coleção de transações
+    match /users/{userId}/transactions/{transactionId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
