@@ -166,7 +166,13 @@
                     <i data-lucide="zap" class="w-5 h-5 text-amber-500"></i>
                     <h2 class="font-semibold text-gray-900 dark:text-white text-base sm:text-lg">Registro Rápido Diário</h2>
                 </div>
-                <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-2.5 py-1 rounded-full w-fit">Padrão WhatsApp / Notion</span>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button id="btnOpenCategories" class="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold text-violet-700 dark:text-violet-300 bg-violet-100 dark:bg-violet-900/40 hover:bg-violet-200 dark:hover:bg-violet-800/60 border border-violet-300 dark:border-violet-700 rounded-xl transition-all">
+                        <i data-lucide="tags" class="w-3.5 h-3.5"></i>
+                        <span>Gerenciar Categorias</span>
+                    </button>
+                    <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700/50 px-2.5 py-1 rounded-full">Padrão WhatsApp / Notion</span>
+                </div>
             </div>
             <div class="mb-4">
                 <label for="quickTextInput" class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
@@ -188,7 +194,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Tipo</label>
-                    <select id="inputType" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <select id="inputType" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" onchange="onTypeChange()">
                         <option value="expense">Saída (-)</option>
                         <option value="income">Entrada (+)</option>
                     </select>
@@ -203,17 +209,12 @@
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Categoria</label>
-                    <select id="inputCategory" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <option value="Alimentação">Alimentação</option>
-                        <option value="Mercado">Mercado</option>
-                        <option value="Transporte">Transporte</option>
-                        <option value="Lazer">Lazer</option>
-                        <option value="Moradia">Moradia</option>
-                        <option value="Dívidas/Reserva">Dívidas / Reserva</option>
-                        <option value="Sazonal/Anual">Sazonal / Anual</option>
-                        <option value="Saúde">Saúde</option>
-                        <option value="Renda/Salário">Renda / Salário</option>
-                        <option value="Outros">Outros</option>
+                    <select id="inputCategory" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" onchange="onCategoryChange()">
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Subcategoria</label>
+                    <select id="inputSubcategory" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     </select>
                 </div>
                 <div>
@@ -226,7 +227,7 @@
                         <option value="Transferência">Transferência</option>
                     </select>
                 </div>
-                <div class="col-span-2 sm:col-span-3 lg:col-span-6 flex justify-end mt-2">
+                <div class="col-span-2 sm:col-span-3 lg:col-span-6 flex justify-end mt-2" style="grid-column: 1 / -1;">
                     <button type="submit" id="btnSubmit" class="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-medium text-sm rounded-xl shadow-sm transition-all flex items-center justify-center space-x-2">
                         <i data-lucide="plus-circle" class="w-4 h-4"></i>
                         <span id="btnSubmitText">Adicionar Lançamento</span>
@@ -289,18 +290,11 @@
                         <input type="text" id="filterSearch" placeholder="Buscar..."
                                class="w-full pl-9 pr-3 py-1.5 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
-                    <select id="filterCategory" class="bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <option value="">Categorias</option>
-                        <option value="Alimentação">Alimentação</option>
-                        <option value="Mercado">Mercado</option>
-                        <option value="Transporte">Transporte</option>
-                        <option value="Lazer">Lazer</option>
-                        <option value="Moradia">Moradia</option>
-                        <option value="Dívidas/Reserva">Dívidas / Reserva</option>
-                        <option value="Sazonal/Anual">Sazonal / Anual</option>
-                        <option value="Saúde">Saúde</option>
-                        <option value="Renda/Salário">Renda / Salário</option>
-                        <option value="Outros">Outros</option>
+                    <select id="filterCategory" class="bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" onchange="onFilterCategoryChange()">
+                        <option value="">Todas Categorias</option>
+                    </select>
+                    <select id="filterSubcategory" class="bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="">Todas Subcategorias</option>
                     </select>
                     <select id="filterMonth" class="bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-2.5 py-1.5 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                         <option value="current">Mês Atual</option>
@@ -316,6 +310,7 @@
                                 <th class="py-3 px-3">Data</th>
                                 <th class="py-3 px-3">Descrição</th>
                                 <th class="py-3 px-3">Categoria</th>
+                                <th class="py-3 px-3">Subcategoria</th>
                                 <th class="py-3 px-3">Forma</th>
                                 <th class="py-3 px-3 text-right">Valor</th>
                                 <th class="py-3 px-3 text-center">Ações</th>
@@ -437,6 +432,55 @@
     </div>
 </div>
 
+<!-- Categories Modal -->
+<div id="categoriesModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-lg shadow-xl border border-gray-200 dark:border-gray-700 flex flex-col max-h-[90vh]">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-700 shrink-0">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="tags" class="w-5 h-5 text-emerald-500"></i>
+                <h3 class="font-bold text-gray-900 dark:text-white text-base">Gerenciar Categorias</h3>
+            </div>
+            <button id="btnCloseCategoriesModal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+
+        <!-- Tipo (Saída / Entrada) -->
+        <div class="px-5 pt-4 shrink-0">
+            <div class="flex bg-gray-100 dark:bg-gray-700/50 p-1 rounded-xl gap-1 w-fit">
+                <button id="catTabExpense" onclick="setCatModalType('expense')"
+                    class="px-4 py-1.5 text-xs font-medium rounded-lg transition-all bg-white dark:bg-gray-800 text-rose-600 dark:text-rose-400 shadow-sm">
+                    Saídas
+                </button>
+                <button id="catTabIncome" onclick="setCatModalType('income')"
+                    class="px-4 py-1.5 text-xs font-medium rounded-lg transition-all text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                    Entradas
+                </button>
+            </div>
+        </div>
+
+        <!-- Add new category -->
+        <div class="px-5 pt-3 pb-2 shrink-0 border-b border-gray-100 dark:border-gray-700">
+            <p class="text-[11px] text-gray-400 mb-2 font-medium uppercase tracking-wide">Nova Categoria</p>
+            <div class="flex gap-2">
+                <input id="inputNewCategory" type="text" placeholder="Nome da categoria..."
+                    class="flex-1 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <button onclick="addCustomCategory()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-medium transition-colors flex items-center space-x-1 shrink-0">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>Adicionar</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Category list -->
+        <div class="flex-1 overflow-y-auto px-5 py-3 space-y-2" id="catModalList"></div>
+
+        <!-- Footer -->
+        <div class="px-5 py-3 border-t border-gray-100 dark:border-gray-700 shrink-0 flex justify-end">
+            <button id="btnCloseCategoriesModalFooter" class="px-5 py-2 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900 rounded-xl text-sm font-medium">Fechar</button>
+        </div>
+    </div>
+</div>
+
 <!-- Toast -->
 <div id="toast" class="fixed bottom-20 md:bottom-5 right-5 z-50 bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900 px-4 py-3 rounded-xl shadow-lg flex items-center space-x-2 text-xs sm:text-sm transition-all transform translate-y-20 opacity-0 pointer-events-none">
     <i id="toastIcon" data-lucide="check-circle" class="w-4 h-4 text-emerald-400 dark:text-emerald-600"></i>
@@ -469,6 +513,7 @@ let unsubscribeSnapshot = null;
 
 const state = {
     transactions: [],
+    customCategories: { expense: {}, income: {} },
     editingId: null,
     chartCategory: null,
     chartDaily: null,
@@ -480,6 +525,10 @@ const state = {
 // =============================================
 function txCollection() {
     return firestore.collection('users').doc(currentUser.uid).collection('transactions');
+}
+
+function settingsDoc() {
+    return firestore.collection('users').doc(currentUser.uid).collection('settings').doc('categories');
 }
 
 async function firestoreAdd(item) {
@@ -503,6 +552,24 @@ async function firestoreClearAll() {
     await batch.commit();
 }
 
+// ---------- Custom categories Firestore ----------
+async function loadCustomCategories() {
+    const snap = await settingsDoc().get();
+    if (snap.exists) {
+        const data = snap.data();
+        state.customCategories = {
+            expense: data.expense || {},
+            income:  data.income  || {}
+        };
+    } else {
+        state.customCategories = { expense: {}, income: {} };
+    }
+}
+
+async function saveCustomCategories() {
+    await settingsDoc().set(state.customCategories);
+}
+
 function subscribeToTransactions() {
     if (unsubscribeSnapshot) unsubscribeSnapshot();
     unsubscribeSnapshot = txCollection()
@@ -520,7 +587,7 @@ function subscribeToTransactions() {
 // =============================================
 // Auth Guard
 // =============================================
-auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(async user => {
     if (!user) {
         window.location.href = 'index.html';
         return;
@@ -533,7 +600,11 @@ auth.onAuthStateChanged(user => {
     document.getElementById('userDisplayName').textContent = user.displayName || 'Usuário';
     document.getElementById('userEmail').textContent = user.email || '';
 
-    // Attach Firestore listener
+    // Load custom categories first, then subscribe
+    await loadCustomCategories();
+    populateCategorySelect('expense', null);
+    populateFilterCategorySelect();
+
     subscribeToTransactions();
 
     // Hide loading overlay
@@ -543,9 +614,119 @@ auth.onAuthStateChanged(user => {
 });
 
 // =============================================
+// Category / Subcategory map
+// =============================================
+const CATEGORIES = {
+    expense: {
+        'Alimentação':      ['Café/Padaria', 'Almoço/Jantar', 'Lanche', 'Delivery', 'Outros'],
+        'Mercado':          ['Supermercado', 'Feira/Hortifruti', 'Açougue', 'Padaria', 'Outros'],
+        'Transporte':       ['Combustível', 'Uber/99', 'Ônibus/Metrô', 'Estacionamento', 'Manutenção', 'Outros'],
+        'Lazer':            ['Restaurante', 'Cinema/Teatro', 'Viagem', 'Assinaturas', 'Esportes', 'Outros'],
+        'Moradia':          ['Aluguel', 'Condomínio', 'IPTU', 'Água', 'Luz', 'Internet/TV', 'Outros'],
+        'Dívidas/Reserva':  ['Cartão de Crédito', 'Empréstimo', 'Reserva de Emergência', 'Investimento', 'Outros'],
+        'Sazonal/Anual':    ['IPVA', 'Seguro', 'Material Escolar', 'Presente', 'Outros'],
+        'Saúde':            ['Farmácia', 'Consulta/Exame', 'Plano de Saúde', 'Academia', 'Outros'],
+        'Educação':         ['Curso/Faculdade', 'Livros', 'Material Didático', 'Outros'],
+        'Vestuário':        ['Roupas', 'Calçados', 'Acessórios', 'Outros'],
+        'Outros':           ['Outros'],
+    },
+    income: {
+        'Renda/Salário':    ['Salário', 'Adiantamento', '13º Salário', 'Férias', 'Outros'],
+        'Freelance':        ['Projeto', 'Consultoria', 'Serviço Avulso', 'Outros'],
+        'Investimentos':    ['Rendimento', 'Dividendos', 'Resgate', 'Outros'],
+        'Benefícios':       ['Vale Alimentação', 'Vale Refeição', 'Auxílio', 'Outros'],
+        'Outros':           ['Outros'],
+    }
+};
+
+// getMergedCategories: padrão + customizações do usuário
+function getMergedCategories(type) {
+    const base = CATEGORIES[type] || CATEGORIES.expense;
+    const custom = state.customCategories[type] || {};
+    const merged = {};
+    // Copiar base
+    for (const [cat, subs] of Object.entries(base)) {
+        merged[cat] = [...subs];
+    }
+    // Mesclar customizações
+    for (const [cat, subs] of Object.entries(custom)) {
+        if (merged[cat]) {
+            // Adicionar subcategorias customizadas que ainda não existem
+            for (const s of subs) {
+                if (!merged[cat].includes(s)) merged[cat].push(s);
+            }
+        } else {
+            merged[cat] = [...subs];
+        }
+    }
+    return merged;
+}
+
+function populateCategorySelect(type, selectedCat) {
+    const sel = document.getElementById('inputCategory');
+    const merged = getMergedCategories(type);
+    const cats = Object.keys(merged);
+    sel.innerHTML = cats.map(c => `<option value="${c}"${c === selectedCat ? ' selected' : ''}>${c}</option>`).join('');
+    const currentCat = selectedCat && cats.includes(selectedCat) ? selectedCat : cats[0];
+    sel.value = currentCat;
+    populateSubcategorySelect(type, currentCat, null);
+}
+
+function populateSubcategorySelect(type, cat, selectedSub) {
+    const sel = document.getElementById('inputSubcategory');
+    const merged = getMergedCategories(type);
+    const subs = merged[cat] || ['Outros'];
+    sel.innerHTML = subs.map(s => `<option value="${s}"${s === selectedSub ? ' selected' : ''}>${s}</option>`).join('');
+    if (selectedSub && subs.includes(selectedSub)) sel.value = selectedSub;
+}
+
+function populateFilterCategorySelect() {
+    const sel = document.getElementById('filterCategory');
+    const allCats = [...new Set([
+        ...Object.keys(getMergedCategories('expense')),
+        ...Object.keys(getMergedCategories('income'))
+    ])];
+    sel.innerHTML = `<option value="">Todas Categorias</option>` +
+        allCats.map(c => `<option value="${c}">${c}</option>`).join('');
+}
+
+function onTypeChange() {
+    const type = document.getElementById('inputType').value;
+    populateCategorySelect(type, null);
+}
+
+function onCategoryChange() {
+    const type = document.getElementById('inputType').value;
+    const cat  = document.getElementById('inputCategory').value;
+    populateSubcategorySelect(type, cat, null);
+}
+
+function onFilterCategoryChange() {
+    const cat = document.getElementById('filterCategory').value;
+    const subSel = document.getElementById('filterSubcategory');
+    if (!cat) {
+        subSel.innerHTML = `<option value="">Todas Subcategorias</option>`;
+    } else {
+        const mergedE = getMergedCategories('expense');
+        const mergedI = getMergedCategories('income');
+        const allSubs = [...(mergedE[cat] || []), ...(mergedI[cat] || [])];
+        const unique = [...new Set(allSubs)];
+        subSel.innerHTML = `<option value="">Todas Subcategorias</option>` +
+            unique.map(s => `<option value="${s}">${s}</option>`).join('');
+    }
+    renderTable();
+}
+
+// =============================================
 // Helpers
 // =============================================
-const getTodayIso = () => new Date().toISOString().split('T')[0];
+const getTodayIso = () => {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+};
 
 function formatBRL(amount) {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(amount);
@@ -602,7 +783,7 @@ function renderRecentPreview() {
                 </div>
                 <div>
                     <p class="font-medium text-gray-900 dark:text-white">${t.description}</p>
-                    <p class="text-[11px] text-gray-400">${formatDateBr(t.date)} • ${t.category}</p>
+                    <p class="text-[11px] text-gray-400">${formatDateBr(t.date)} • ${t.category}${t.subcategory ? ' › ' + t.subcategory : ''}</p>
                 </div>
             </div>
             <span class="font-semibold ${isIncome ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-900 dark:text-gray-100'}">
@@ -623,14 +804,18 @@ function renderTable() {
     const selectedPeriod = document.getElementById('filterMonth').value;
     const currentMonthStr = getTodayIso().substring(0, 7);
 
+    const selectedSub = document.getElementById('filterSubcategory').value;
+
     const filtered = state.transactions.filter(t => {
         if (selectedPeriod === 'current' && t.date && !t.date.startsWith(currentMonthStr)) return false;
         if (selectedCat && t.category !== selectedCat) return false;
+        if (selectedSub && (t.subcategory || '') !== selectedSub) return false;
         if (searchTerm) {
             const matchDesc = (t.description || '').toLowerCase().includes(searchTerm);
             const matchCat  = (t.category || '').toLowerCase().includes(searchTerm);
+            const matchSub  = (t.subcategory || '').toLowerCase().includes(searchTerm);
             const matchPay  = (t.paymentMethod || '').toLowerCase().includes(searchTerm);
-            if (!matchDesc && !matchCat && !matchPay) return false;
+            if (!matchDesc && !matchCat && !matchSub && !matchPay) return false;
         }
         return true;
     });
@@ -647,6 +832,7 @@ function renderTable() {
             <td class="py-3 px-3 text-gray-500 dark:text-gray-400 whitespace-nowrap">${formatDateBr(t.date)}</td>
             <td class="py-3 px-3 font-medium text-gray-900 dark:text-white">${t.description}</td>
             <td class="py-3 px-3"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">${t.category}</span></td>
+            <td class="py-3 px-3 text-gray-500 dark:text-gray-400 text-[11px]">${t.subcategory || '—'}</td>
             <td class="py-3 px-3 text-gray-500 dark:text-gray-400">${t.paymentMethod}</td>
             <td class="py-3 px-3 text-right whitespace-nowrap ${amountClass}">${isIncome ? '+ ' : '- '}${formatBRL(t.amount)}</td>
             <td class="py-3 px-3 text-center whitespace-nowrap">
@@ -740,11 +926,11 @@ function parseQuickText() {
     const val = document.getElementById('quickTextInput').value;
     const parsed = parseQuickLine(val);
     if (parsed && parsed.amount > 0) {
+        document.getElementById('inputType').value = parsed.type;
         document.getElementById('inputAmount').value = parsed.amount;
         document.getElementById('inputDescription').value = parsed.description;
         document.getElementById('inputPayment').value = parsed.paymentMethod;
-        document.getElementById('inputCategory').value = parsed.category;
-        document.getElementById('inputType').value = parsed.type;
+        populateCategorySelect(parsed.type, parsed.category);
         showToast("Preenchido com sucesso!");
     }
 }
@@ -760,6 +946,7 @@ async function handleFormSubmit(e) {
         amount: parseFloat(document.getElementById('inputAmount').value),
         description: document.getElementById('inputDescription').value.trim(),
         category: document.getElementById('inputCategory').value,
+        subcategory: document.getElementById('inputSubcategory').value,
         paymentMethod: document.getElementById('inputPayment').value
     };
 
@@ -812,7 +999,8 @@ function editTransaction(id) {
     document.getElementById('inputType').value = item.type;
     document.getElementById('inputAmount').value = item.amount;
     document.getElementById('inputDescription').value = item.description;
-    document.getElementById('inputCategory').value = item.category;
+    populateCategorySelect(item.type, item.category);
+    populateSubcategorySelect(item.type, item.category, item.subcategory || null);
     document.getElementById('inputPayment').value = item.paymentMethod;
     state.editingId = id;
     document.getElementById('btnSubmitText').textContent = "Atualizar Lançamento";
@@ -838,11 +1026,12 @@ function exportToExcel() {
         'Tipo': t.type === 'income' ? 'Entrada (+)' : 'Saída (-)',
         'Descrição': t.description,
         'Categoria': t.category,
+        'Subcategoria': t.subcategory || '',
         'Forma de Pagamento': t.paymentMethod,
         'Valor (R$)': t.type === 'income' ? parseFloat(t.amount) : -parseFloat(t.amount)
     }));
     const ws = XLSX.utils.json_to_sheet(rows);
-    ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 28 }, { wch: 18 }, { wch: 18 }, { wch: 15 }];
+    ws['!cols'] = [{ wch: 12 }, { wch: 14 }, { wch: 28 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 15 }];
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Lançamentos");
     XLSX.writeFile(wb, `FinancApp_${period}_${getTodayIso()}.xlsx`);
@@ -884,6 +1073,128 @@ async function importBackupJSON(e) {
 }
 
 // =============================================
+// Categories Modal Logic
+// =============================================
+let catModalType = 'expense';
+
+function setCatModalType(type) {
+    catModalType = type;
+    const isExpense = type === 'expense';
+    document.getElementById('catTabExpense').className = `px-4 py-1.5 text-xs font-medium rounded-lg transition-all ${isExpense ? 'bg-white dark:bg-gray-800 text-rose-600 dark:text-rose-400 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`;
+    document.getElementById('catTabIncome').className  = `px-4 py-1.5 text-xs font-medium rounded-lg transition-all ${!isExpense ? 'bg-white dark:bg-gray-800 text-emerald-600 dark:text-emerald-400 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`;
+    document.getElementById('inputNewCategory').value = '';
+    renderCatModalList();
+}
+
+function renderCatModalList() {
+    const list = document.getElementById('catModalList');
+    list.innerHTML = '';
+    const merged = getMergedCategories(catModalType);
+    const custom = state.customCategories[catModalType] || {};
+
+    for (const [cat, subs] of Object.entries(merged)) {
+        const isCustomCat = !!custom[cat];
+        const div = document.createElement('div');
+        div.className = 'bg-gray-50 dark:bg-gray-900/60 rounded-xl border border-gray-200 dark:border-gray-700 p-3';
+        div.innerHTML = `
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-semibold text-gray-800 dark:text-white flex items-center gap-1.5">
+                    ${cat}
+                    ${isCustomCat ? '<span class="text-[10px] bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 px-1.5 py-0.5 rounded-full">personalizada</span>' : ''}
+                </span>
+                <div class="flex items-center gap-1">
+                    ${isCustomCat ? `<button onclick="deleteCustomCategory('${cat}')" class="p-1 text-rose-400 hover:text-rose-600 transition-colors" title="Remover categoria"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mb-2" id="subList-${CSS.escape(cat)}">
+                ${subs.map(s => {
+                    const isCustomSub = isCustomCat
+                        ? (custom[cat] || []).includes(s)
+                        : ((custom[cat] || []).includes(s));
+                    return `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs ${isCustomSub ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}">
+                        ${s}
+                        ${isCustomSub ? `<button onclick="deleteCustomSubcategory('${cat}','${s}')" class="hover:text-rose-500 transition-colors ml-0.5"><i data-lucide="x" class="w-2.5 h-2.5"></i></button>` : ''}
+                    </span>`;
+                }).join('')}
+            </div>
+            <div class="flex gap-1.5">
+                <input type="text" id="inputSub-${cat}" placeholder="Nova subcategoria..."
+                    class="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <button onclick="addCustomSubcategory('${cat}')" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium transition-colors flex items-center gap-1 shrink-0">
+                    <i data-lucide="plus" class="w-3 h-3"></i> Sub
+                </button>
+            </div>`;
+        list.appendChild(div);
+    }
+    lucide.createIcons();
+}
+
+async function addCustomCategory() {
+    const input = document.getElementById('inputNewCategory');
+    const name = input.value.trim();
+    if (!name) return;
+    const merged = getMergedCategories(catModalType);
+    if (merged[name]) { showToast('Categoria já existe!'); return; }
+    if (!state.customCategories[catModalType]) state.customCategories[catModalType] = {};
+    state.customCategories[catModalType][name] = ['Outros'];
+    await saveCustomCategories();
+    input.value = '';
+    populateCategorySelect(document.getElementById('inputType').value, null);
+    populateFilterCategorySelect();
+    renderCatModalList();
+    showToast(`Categoria "${name}" adicionada!`);
+}
+
+async function deleteCustomCategory(cat) {
+    if (!confirm(`Remover a categoria "${cat}" e todas as subcategorias personalizadas?`)) return;
+    delete state.customCategories[catModalType][cat];
+    await saveCustomCategories();
+    populateCategorySelect(document.getElementById('inputType').value, null);
+    populateFilterCategorySelect();
+    renderCatModalList();
+    showToast(`Categoria "${cat}" removida.`);
+}
+
+async function addCustomSubcategory(cat) {
+    const input = document.getElementById(`inputSub-${cat}`);
+    const name = input.value.trim();
+    if (!name) return;
+    const merged = getMergedCategories(catModalType);
+    if ((merged[cat] || []).includes(name)) { showToast('Subcategoria já existe!'); return; }
+    if (!state.customCategories[catModalType]) state.customCategories[catModalType] = {};
+    if (!state.customCategories[catModalType][cat]) state.customCategories[catModalType][cat] = [];
+    state.customCategories[catModalType][cat].push(name);
+    await saveCustomCategories();
+    input.value = '';
+    populateSubcategorySelect(document.getElementById('inputType').value, document.getElementById('inputCategory').value, null);
+    renderCatModalList();
+    showToast(`Subcategoria "${name}" adicionada!`);
+}
+
+async function deleteCustomSubcategory(cat, sub) {
+    const customCat = (state.customCategories[catModalType] || {})[cat];
+    if (!customCat) return;
+    state.customCategories[catModalType][cat] = customCat.filter(s => s !== sub);
+    if (state.customCategories[catModalType][cat].length === 0 && !CATEGORIES[catModalType]?.[cat]) {
+        delete state.customCategories[catModalType][cat];
+    }
+    await saveCustomCategories();
+    populateSubcategorySelect(document.getElementById('inputType').value, document.getElementById('inputCategory').value, null);
+    renderCatModalList();
+    showToast(`Subcategoria "${sub}" removida.`);
+}
+
+function openCategoriesModal() {
+    catModalType = 'expense';
+    setCatModalType('expense');
+    document.getElementById('categoriesModal').classList.remove('hidden');
+}
+
+function closeCategoriesModal() {
+    document.getElementById('categoriesModal').classList.add('hidden');
+}
+
+// =============================================
 // Navigation
 // =============================================
 function switchTab(tabName) {
@@ -911,20 +1222,37 @@ function showToast(msg) {
 document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
     document.getElementById('inputDate').value = getTodayIso();
+
+    // Init category/subcategory selects
+    populateCategorySelect('expense', null);
+    populateFilterCategorySelect();
+
     document.getElementById('transactionForm').addEventListener('submit', handleFormSubmit);
     document.getElementById('btnParseQuickText').addEventListener('click', parseQuickText);
     document.getElementById('quickTextInput').addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); parseQuickText(); } });
-    document.querySelectorAll('.tag-btn').forEach(btn => btn.addEventListener('click', () => { document.getElementById('inputCategory').value = btn.dataset.cat; }));
+    document.querySelectorAll('.tag-btn').forEach(btn => btn.addEventListener('click', () => {
+        const cat = btn.dataset.cat;
+        const type = document.getElementById('inputType').value;
+        const cats = Object.keys(CATEGORIES[type] || CATEGORIES.expense);
+        if (cats.includes(cat)) {
+            document.getElementById('inputCategory').value = cat;
+            populateSubcategorySelect(type, cat, null);
+        }
+    }));
     document.querySelectorAll('.nav-btn-tab').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
     document.getElementById('btnProcessBatch').addEventListener('click', processBatchInput);
     document.getElementById('filterSearch').addEventListener('input', renderTable);
-    document.getElementById('filterCategory').addEventListener('change', renderTable);
+    document.getElementById('filterSubcategory').addEventListener('change', renderTable);
     document.getElementById('filterMonth').addEventListener('change', renderTable);
 
     // Modals
     document.getElementById('btnOpenExport').addEventListener('click', () => document.getElementById('exportModal').classList.remove('hidden'));
     document.querySelectorAll('.btnCloseModal').forEach(b => b.addEventListener('click', () => document.getElementById('exportModal').classList.add('hidden')));
     document.getElementById('btnConfirmExport').addEventListener('click', exportToExcel);
+    document.getElementById('btnOpenCategories').addEventListener('click', openCategoriesModal);
+    document.getElementById('btnCloseCategoriesModal').addEventListener('click', closeCategoriesModal);
+    document.getElementById('btnCloseCategoriesModalFooter').addEventListener('click', closeCategoriesModal);
+    document.getElementById('categoriesModal').addEventListener('click', e => { if (e.target === document.getElementById('categoriesModal')) closeCategoriesModal(); });
     document.getElementById('btnOpenBackup').addEventListener('click', () => document.getElementById('backupModal').classList.remove('hidden'));
     document.querySelectorAll('.btnCloseBackupModal').forEach(b => b.addEventListener('click', () => document.getElementById('backupModal').classList.add('hidden')));
     document.getElementById('btnDownloadBackupJSON').addEventListener('click', downloadBackupJSON);
